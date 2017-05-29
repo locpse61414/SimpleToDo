@@ -50,11 +50,23 @@ public class EditActivity extends AppCompatActivity {
                 R.array.priority_array, android.R.layout.simple_spinner_item);
         priorityAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mPrioritySpinner.setAdapter(priorityAdapter);
+        if(mUser.getPriority().equalsIgnoreCase("high")){
+            mPrioritySpinner.setSelection(0);
+        }else if(mUser.getPriority().equalsIgnoreCase("medium")){
+            mPrioritySpinner.setSelection(1);
+        }else{
+            mPrioritySpinner.setSelection(2);
+        }
 
         ArrayAdapter<CharSequence> statusAdapter = ArrayAdapter.createFromResource(this,
                 R.array.status_array, android.R.layout.simple_spinner_item);
         statusAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mSatusSpinner.setAdapter(statusAdapter);
+        if(mUser.getStatus().equalsIgnoreCase("DONE")){
+            mSatusSpinner.setSelection(0);
+        }else{
+            mSatusSpinner.setSelection(1);
+        }
 
         mTaskName.setText(mUser.getTaskname());
         mTaskNote.setText(mUser.getTaskNote());
