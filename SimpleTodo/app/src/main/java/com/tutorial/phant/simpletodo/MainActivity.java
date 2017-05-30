@@ -21,12 +21,12 @@ import model.User;
 
 public class MainActivity extends AppCompatActivity implements AddDialogFragment.AddDialogListener {
 
-    private ArrayList<User> users;
     @BindView(R.id.rvUsers)
     RecyclerView rvUsers;
     private UserAdapter userAdapter;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
+    private ArrayList<User> users;
     private final int REQUEST_CODE = 20;
     private long idEditItem = -1;
 
@@ -59,15 +59,10 @@ public class MainActivity extends AppCompatActivity implements AddDialogFragment
     //setUpViews
     private void setUpViews() {
         ButterKnife.bind(this);
-//        toolbar = (Toolbar) findViewById(R.id.toolbar);
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setLogo(R.drawable.ic_todo);
-//        getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayUseLogoEnabled(true);
-
-//        rvUsers = (RecyclerView) findViewById(R.id.rvUsers);
-
 
         userAdapter = new UserAdapter(users);
         rvUsers.setAdapter(userAdapter);
