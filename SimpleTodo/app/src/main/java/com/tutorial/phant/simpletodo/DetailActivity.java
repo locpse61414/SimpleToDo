@@ -12,16 +12,23 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import model.User;
 
 public class DetailActivity extends AppCompatActivity {
-
-    private Toolbar toolbar;
-    private TextView mTaskname;
-    private TextView mTaskNote;
-    private TextView mSatus;
-    private TextView mPriority;
-    private TextView mDatePicker;
+    @BindView(R.id.toolbarDetail)
+    Toolbar toolbar;
+    @BindView(R.id.tvTaskDetail)
+    TextView mTaskname;
+    @BindView(R.id.tvNoteDetail)
+    TextView mTaskNote;
+    @BindView(R.id.tvStatusDetail)
+    TextView mSatus;
+    @BindView(R.id.tvPriorityDetail)
+    TextView mPriority;
+    @BindView(R.id.tvDateDetail)
+    TextView mDatePicker;
     private User mUser;
     private ArrayList mUsers;
     private int mPosition = -1;
@@ -32,7 +39,7 @@ public class DetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
-
+        ButterKnife.bind(this);
         mUsers = (ArrayList) getIntent().getParcelableArrayListExtra("list");
         mPosition = (int) getIntent().getSerializableExtra("position");
 
@@ -41,19 +48,12 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     private void setUpViews(ArrayList<User> users, int position) {
-
         mUser = users.get(position);
-        toolbar = (Toolbar) findViewById(R.id.toolbarDetail);
+
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setLogo(R.drawable.ic_todo);
         getSupportActionBar().setDisplayUseLogoEnabled(true);
-
-        mTaskname = (TextView) findViewById(R.id.tvTaskDetail);
-        mTaskNote = (TextView) findViewById(R.id.tvNoteDetail);
-        mSatus = (TextView) findViewById(R.id.tvStatusDetail);
-        mPriority = (TextView) findViewById(R.id.tvPriorityDetail);
-        mDatePicker = (TextView) findViewById(R.id.tvDateDetail);
 
         mTaskname.setText(mUser.getTaskname());
         mTaskNote.setText(mUser.getTaskNote());
@@ -94,12 +94,12 @@ public class DetailActivity extends AppCompatActivity {
             // Extract name value from result extras
             User user = data.getExtras().getParcelable("user");
             //update object in array
-            mUsers.set(mPosition,user);
+            mUsers.set(mPosition, user);
 
             Intent data2 = new Intent();
             // Pass relevant data back as a result
-            data2.putExtra("itemEdited",user);
-            data2.putExtra("itemEditedPosition",mPosition);
+            data2.putExtra("itemEdited", user);
+            data2.putExtra("itemEditedPosition", mPosition);
             // Activity finished ok, return the data
             setResult(RESULT_OK, data2); // set result code and bundle data for response
             finish();
@@ -117,7 +117,7 @@ public class DetailActivity extends AppCompatActivity {
     private void removeItem() {
         Intent data = new Intent();
         // Pass relevant data back as a result
-        data.putExtra("positionRemoved",mPosition);
+        data.putExtra("positionRemoved", mPosition);
         // Activity finished ok, return the data
         setResult(RESULT_OK, data); // set result code and bundle data for response
         this.finish();

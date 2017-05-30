@@ -1,6 +1,7 @@
 package adapter;
 
-import android.graphics.Color;
+import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,8 @@ import com.tutorial.phant.simpletodo.R;
 
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import model.User;
 
 /**
@@ -20,6 +23,7 @@ import model.User;
 public class UserAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private List<User> users;
+    private Context context;
 
     public UserAdapter(List<User> users) {
         this.users = users;
@@ -53,6 +57,7 @@ public class UserAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        context = parent.getContext();
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_user, parent, false);
         return new ViewHolder(itemView);
@@ -65,11 +70,14 @@ public class UserAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         viewHolder.tvUsername.setText(user.getTaskname());
         viewHolder.tvPriorityMain.setText(user.getPriority());
         if(user.getPriority().equalsIgnoreCase("HIGH")){
-            viewHolder.tvPriorityMain.setTextColor(Color.parseColor("#FF0000"));
+//            viewHolder.tvPriorityMain.setTextColor(Color.parseColor("#FF0000"));
+            viewHolder.tvPriorityMain.setTextColor(ContextCompat.getColor(context,R.color.colorHigh));
         }else if(user.getPriority().equalsIgnoreCase("MEDIUM")){
-            viewHolder.tvPriorityMain.setTextColor(Color.parseColor("#009688"));
+//            viewHolder.tvPriorityMain.setTextColor(Color.parseColor("#009688"));
+            viewHolder.tvPriorityMain.setTextColor(ContextCompat.getColor(context,R.color.colorMedium));
         }else{
-            viewHolder.tvPriorityMain.setTextColor(Color.parseColor("#FF6633"));
+//            viewHolder.tvPriorityMain.setTextColor(Color.parseColor("#FF6633"));
+            viewHolder.tvPriorityMain.setTextColor(ContextCompat.getColor(context,R.color.colorLow));
         }
 
     }
@@ -80,13 +88,18 @@ public class UserAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        public final TextView tvUsername;
-        public final TextView tvPriorityMain;
+//        public final TextView tvUsername;
+//        public final TextView tvPriorityMain;
+        @BindView(R.id.tvUsername)
+        TextView tvUsername;
+        @BindView(R.id.tvPriorityMain)
+        TextView tvPriorityMain;
 
         public ViewHolder(final View itemView) {
             super(itemView);
-            tvUsername = (TextView) itemView.findViewById(R.id.tvUsername);
-            tvPriorityMain = (TextView) itemView.findViewById(R.id.tvPriorityMain);
+//            tvUsername = (TextView) itemView.findViewById(R.id.tvUsername);
+//            tvPriorityMain = (TextView) itemView.findViewById(R.id.tvPriorityMain);
+            ButterKnife.bind(this,itemView);
 
             // Setup the click listener
             itemView.setOnLongClickListener(new View.OnLongClickListener() {

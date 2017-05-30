@@ -17,20 +17,26 @@ import android.widget.Spinner;
 
 import com.tutorial.phant.simpletodo.R;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import model.User;
-
-import static com.tutorial.phant.simpletodo.R.id.datePicker;
 
 /**
  * Created by phant on 24-May-17.
  */
 
 public class AddDialogFragment extends DialogFragment {
-    private EditText mTaskName;
-    private EditText mTaskNote;
-    private Spinner mSatusSpinner;
-    private Spinner mPrioritySpinner;
-    private DatePicker mDatePicker;
+
+    @BindView(R.id.etTaskName)
+    EditText mTaskName;
+    @BindView(R.id.etTaskNote)
+    EditText mTaskNote;
+    @BindView(R.id.spinnerStatus)
+    Spinner mSatusSpinner;
+    @BindView(R.id.spinnerPriority)
+    Spinner mPrioritySpinner;
+    @BindView(R.id.datePicker)
+    DatePicker mDatePicker;
     private User mUser;
 
     public AddDialogFragment() {
@@ -68,7 +74,8 @@ public class AddDialogFragment extends DialogFragment {
         LayoutInflater i = getActivity().getLayoutInflater();
 
         View view = i.inflate(R.layout.fragment_edit_name, null);
-        setUpViews(view);
+        ButterKnife.bind(this, view);
+        setUpViews();
 
         AlertDialog.Builder b = new AlertDialog.Builder(getActivity())
                 .setTitle("Simple To Do")
@@ -89,7 +96,7 @@ public class AddDialogFragment extends DialogFragment {
                                 String status = mSatusSpinner.getSelectedItem().toString();
                                 String priority = mPrioritySpinner.getSelectedItem().toString();
 
-                                if(mTaskName.length() >0){
+                                if (mTaskName.length() > 0) {
                                     User user = new User(taskName, taskNote, priority, status, date);
                                     listener = (AddDialogListener) getActivity();
                                     listener.onFinishAddDialog(user);
@@ -135,13 +142,7 @@ public class AddDialogFragment extends DialogFragment {
 //
 //    }
 
-    private void setUpViews(View view) {
-        mTaskName = (EditText) view.findViewById(R.id.etTaskName);
-        mTaskNote = (EditText) view.findViewById(R.id.etTaskNote);
-        mSatusSpinner = (Spinner) view.findViewById(R.id.spinnerStatus);
-        mPrioritySpinner = (Spinner) view.findViewById(R.id.spinnerPriority);
-        mDatePicker = (DatePicker) view.findViewById(datePicker);
-
+    private void setUpViews() {
         ArrayAdapter<CharSequence> priorityAdapter = ArrayAdapter.createFromResource(getContext(),
                 R.array.priority_array, android.R.layout.simple_spinner_item);
         priorityAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);

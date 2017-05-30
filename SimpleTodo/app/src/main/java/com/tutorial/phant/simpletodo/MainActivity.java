@@ -14,16 +14,19 @@ import android.view.View;
 import java.util.ArrayList;
 
 import adapter.UserAdapter;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import fragment.AddDialogFragment;
 import model.User;
 
 public class MainActivity extends AppCompatActivity implements AddDialogFragment.AddDialogListener {
 
     private ArrayList<User> users;
-    private RecyclerView rvUsers;
+    @BindView(R.id.rvUsers)
+    RecyclerView rvUsers;
     private UserAdapter userAdapter;
-    private String value;
-    private Toolbar toolbar;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
     private final int REQUEST_CODE = 20;
     private long idEditItem = -1;
 
@@ -55,14 +58,15 @@ public class MainActivity extends AppCompatActivity implements AddDialogFragment
 
     //setUpViews
     private void setUpViews() {
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        ButterKnife.bind(this);
+//        toolbar = (Toolbar) findViewById(R.id.toolbar);
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setLogo(R.drawable.ic_todo);
 //        getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayUseLogoEnabled(true);
 
-        rvUsers = (RecyclerView) findViewById(R.id.rvUsers);
+//        rvUsers = (RecyclerView) findViewById(R.id.rvUsers);
 
 
         userAdapter = new UserAdapter(users);

@@ -11,50 +11,48 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import model.User;
 
-import static com.tutorial.phant.simpletodo.R.id.datePickerEdit;
-
 public class EditActivity extends AppCompatActivity {
-
-    private Toolbar toolbar;
-    private EditText mTaskName;
-    private EditText mTaskNote;
-    private Spinner mSatusSpinner;
-    private Spinner mPrioritySpinner;
-    private DatePicker mDatePicker;
+    @BindView(R.id.toolbarEdit)
+    Toolbar toolbar;
+    @BindView(R.id.etTaskNameEdit)
+    EditText mTaskName;
+    @BindView(R.id.etTaskNoteEdit)
+    EditText mTaskNote;
+    @BindView(R.id.spinnerStatusEdit)
+    Spinner mSatusSpinner;
+    @BindView(R.id.spinnerPriorityEdit)
+    Spinner mPrioritySpinner;
+    @BindView(R.id.datePickerEdit)
+    DatePicker mDatePicker;
     private User mUser;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit);
+        ButterKnife.bind(this);
         mUser = getIntent().getExtras().getParcelable("todo");
         setUpViews();
     }
 
     private void setUpViews() {
-        toolbar = (Toolbar) findViewById(R.id.toolbarEdit);
         setSupportActionBar(toolbar);
         getSupportActionBar().setLogo(R.drawable.ic_todo);
         getSupportActionBar().setDisplayUseLogoEnabled(true);
-
-        mTaskName = (EditText) findViewById(R.id.etTaskNameEdit);
-        mTaskNote = (EditText) findViewById(R.id.etTaskNoteEdit);
-        mSatusSpinner = (Spinner) findViewById(R.id.spinnerStatusEdit);
-        mPrioritySpinner = (Spinner) findViewById(R.id.spinnerPriorityEdit);
-        mDatePicker = (DatePicker) findViewById(datePickerEdit);
 
         ArrayAdapter<CharSequence> priorityAdapter = ArrayAdapter.createFromResource(this,
                 R.array.priority_array, android.R.layout.simple_spinner_item);
         priorityAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mPrioritySpinner.setAdapter(priorityAdapter);
-        if(mUser.getPriority().equalsIgnoreCase("high")){
+        if (mUser.getPriority().equalsIgnoreCase("high")) {
             mPrioritySpinner.setSelection(0);
-        }else if(mUser.getPriority().equalsIgnoreCase("medium")){
+        } else if (mUser.getPriority().equalsIgnoreCase("medium")) {
             mPrioritySpinner.setSelection(1);
-        }else{
+        } else {
             mPrioritySpinner.setSelection(2);
         }
 
@@ -62,9 +60,9 @@ public class EditActivity extends AppCompatActivity {
                 R.array.status_array, android.R.layout.simple_spinner_item);
         statusAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mSatusSpinner.setAdapter(statusAdapter);
-        if(mUser.getStatus().equalsIgnoreCase("DONE")){
+        if (mUser.getStatus().equalsIgnoreCase("DONE")) {
             mSatusSpinner.setSelection(0);
-        }else{
+        } else {
             mSatusSpinner.setSelection(1);
         }
 
